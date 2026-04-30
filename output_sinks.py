@@ -5,9 +5,9 @@ from typing import Any, Dict, List, Optional, Sequence
 import json
 import os
 from pathlib import Path
-
 import pyarrow as pa
 import pyarrow.parquet as pq
+
 
 # summary to print at end of enumeration if saving to parquet
 @dataclass
@@ -21,6 +21,8 @@ class OutputSummary:
 # sink for saving to parquet files
 class ParquetSink:
     def __init__(self, out_dir: str, prefix: str = 'part', compression: str = 'zstd'):
+        if pq is None:
+            raise ImportError("pyarrow is required for ParquetSink")
         self.out_dir = str(out_dir)
         self.prefix = prefix
         self.compression = compression
