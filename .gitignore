@@ -4,3 +4,8 @@
 *.txt
 *.zip
 doc/
+tests/
+*.yml
+testing.py
+pytest*
+run_tests.py
