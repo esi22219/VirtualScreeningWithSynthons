@@ -327,4 +327,6 @@ Contributions are welcome, please fork if you are interested. Suggested areas:
 
 ## License
 
-Add your license information here.
+- This project is primarily licensed under the MIT License (see LICENSE.txt).
+- Portions of the code under `SyntOn/` are licensed under the BSD 3-Clause License.
+  See `SyntOn/LICENSE` for details.
