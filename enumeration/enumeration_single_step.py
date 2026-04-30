@@ -21,11 +21,11 @@ import random
 
 from rdkit import Chem
 from rdkit.Chem import rdChemReactions
-from standardization import canonicalize_seed_smiles, StandardizedSeed
-from sites import list_reactive_sites, resolve_allowed_sites, ReactiveSite
-from reactions import ReactionIndex
-from synthons import SynthonIndex
-from output_sinks import ParquetSink, OutputSummary
+from enumeration.standardization import canonicalize_seed_smiles, StandardizedSeed
+from enumeration.sites import list_reactive_sites, resolve_allowed_sites, ReactiveSite
+from enumeration.reactions import ReactionIndex
+from enumeration.synthons import SynthonIndex
+from enumeration.output_sinks import ParquetSink, OutputSummary
 
 logger = logging.getLogger(__name__)
 
