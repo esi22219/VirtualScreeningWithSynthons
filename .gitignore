@@ -1,0 +1,6 @@
+/__pycache__/
+*/.idea/*
+*.xlsx
+*.txt
+*.zip
+doc/
