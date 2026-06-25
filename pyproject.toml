@@ -1,0 +1,32 @@
+[project]
+name = "synthons"
+version = "0.1.0"
+authors = [
+  {name = "Elias Paul", email = "Elias_Paul@eisai.com"},
+  {name = "Sung-Hun Bae", email = "sunghun.bae@gmail.com"},
+  ]
+requires-python = ">= 3.12"
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tool.pixi.pypi-dependencies]
+synthons = { path = ".", editable = true }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/synthons"]
+
+[tool.hatch.build]
+include = ["src/synthons/config/*.*",]
+
+[project.scripts]
+bbsynthonize = "synthons.SyntOn_BBsBulkClassificationAndSynthonization:cli_entry_point"
+fgenumerate = "synthons.enumeration.main:cli_entry_point"
+
+[tool.pixi.tasks]
+
+[tool.pixi.dependencies]
+python = "3.12.*"
+rdkit = ">=2026.3.3,<2027"
+pyarrow = ">=24.0.0,<25"

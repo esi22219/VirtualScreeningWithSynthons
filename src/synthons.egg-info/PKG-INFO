@@ -1,0 +1,7 @@
+Metadata-Version: 2.4
+Name: synthons
+Version: 0.1.0
+Author-email: Elias Paul <Elias_Paul@eisai.com>, Sung-Hun Bae <sunghun.bae@gmail.com>
+Requires-Python: >=3.12
+License-File: LICENSE
+Dynamic: license-file

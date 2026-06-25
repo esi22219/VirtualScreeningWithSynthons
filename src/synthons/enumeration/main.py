@@ -1,17 +1,19 @@
-from reactions import ReactionIndex
-from synthons import SynthonIndex, extract_marks_from_smiles
-from enumeration_single_step import SeedSpec, SingleStepEnumerator
-from sites import list_reactive_sites
+from .reactions import ReactionIndex
+from .synthons import SynthonIndex, extract_marks_from_smiles
+from .enumeration_single_step import SeedSpec, SingleStepEnumerator
+from .sites import list_reactive_sites
 
-from SyntOn.src.SyntOn_BBs import mainSynthonsGenerator
+from synthons.SyntOn.SyntOn_BBs import mainSynthonsGenerator
 
 from rdkit import Chem, RDLogger
 RDLogger.DisableLog('rdApp.*')
 
 import argparse
+from importlib.resources import files
 from argparse import ArgumentParser
 from pathlib import Path
 from datetime import datetime
+
 
 def sdf_to_smiles(sdf_path, n=None):
     """Reads all molecules in an SDF file and returns a list of their smiles strings
@@ -215,8 +217,8 @@ def main(seed_path,
     return gen, summary
 
 
-if __name__ == "__main__":
-    parser = ArgumentParser()
+def cli_entry_point():
+    parser = ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument("--seeds", 
                         type = file_with_ext(".sdf", ".smi"), 
@@ -230,10 +232,10 @@ if __name__ == "__main__":
 
     parser.add_argument("--rxn_config", 
                         type = file_with_ext(".xml"),
-                        default="SyntOn/config/Setup.xml",
+                        default= files("synthons.SyntOn.config") / "Setup.xml",
                         required=False,
                         help = "Path to reaction setup configuration file")
-    
+
     parser.add_argument("--mode", 
                         choices = ["stream", "parquet", "both"], 
                         default = "stream", 
@@ -278,3 +280,7 @@ if __name__ == "__main__":
         # do additional analysis on generator here
         for batch in gen: 
             pass
+
+
+if __name__ == '__main__':
+    cli_entry_point()

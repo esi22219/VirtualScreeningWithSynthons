@@ -4,4 +4,6 @@
 *.txt
 *.zip
 doc/
-tests/
+tests/# pixi environments
+.pixi/*
+!.pixi/config.toml

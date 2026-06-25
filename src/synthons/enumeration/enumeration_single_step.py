@@ -7,11 +7,12 @@ import logging
 import random
 import json, os
 from rdkit import Chem
-from enumeration.standardization import canonicalize_seed_smiles
-from enumeration.sites import list_reactive_sites, resolve_allowed_sites, ReactiveSite
-from enumeration.reactions import ReactionIndex
-from enumeration.synthons import SynthonIndex
-from enumeration.output_sinks import ParquetSink, OutputSummary
+
+from .standardization import canonicalize_seed_smiles
+from .sites import list_reactive_sites, resolve_allowed_sites, ReactiveSite
+from .reactions import ReactionIndex
+from .synthons import SynthonIndex
+from .output_sinks import ParquetSink, OutputSummary
 
 logger = logging.getLogger(__name__)
 

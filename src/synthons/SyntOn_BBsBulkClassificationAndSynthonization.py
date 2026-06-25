@@ -1,15 +1,12 @@
-import os,sys
-srcPath = os.path.split(os.path.realpath(__file__))[0]
-sys.path.insert(1, srcPath)
-from src.SyntOn_Classifier import *
-from src.SyntOn_BBs import *
-from src.UsefulFunctions import *
+import os
+import argparse
+
+from synthons.SyntOn.SyntOn_Classifier import *
+from synthons.SyntOn.SyntOn_BBs import *
+from synthons.SyntOn.UsefulFunctions import *
 from rdkit import Chem
-"""from rdkit.Chem.rdMolDescriptors import *
-from rdkit.Chem.rdmolops import *"""
+
 from concurrent.futures import ProcessPoolExecutor
-"""from rdkit.Chem.Descriptors import *
-from rdkit.Chem.rdMolDescriptors import *"""
 from functools import partial
 
 
@@ -80,8 +77,8 @@ def main(inp,keepPG, output=None, Ro2Filtr=False):
                     out.write(sline + " " + ",".join(Classes) + " NoSynthonsWereGenerated\n")
 
 
-if __name__ == '__main__':
-    import argparse
+
+def cli_entry_point():
     parser = argparse.ArgumentParser(description="BBs classification and Synthons generation for large BBs libraries",
                                      epilog="Code implementation:                Yuliana Zabolotna, Alexandre Varnek\n"
                                             "                                    Laboratoire de Chémoinformatique, Université de Strasbourg.\n\n"
@@ -90,14 +87,20 @@ if __name__ == '__main__':
                                             "                                    Kyiv National Taras Shevchenko University\n"
                                             "2021 Strasbourg, Kiev",
                                      prog="SyntOn_BBsBulkClassificationAndSynthonization", formatter_class=argparse.RawTextHelpFormatter)
-    parser.add_argument("-i", "--input", type=str, help="Input file containing 2 columns building blocks smiles and ids.")
-    parser.add_argument("-o", "--output", type=str, help="Output files suffix name.")
-    parser.add_argument("--keepPG", action="store_true", help="Write both protected and unprotected "
+    parser.add_argument("-i", "--input", type=str, required=True, 
+                        help="Input file containing 2 columns building blocks smiles and ids.")
+    parser.add_argument("-o", "--output", type=str, required=True, 
+                        help="Output files suffix name.")
+    parser.add_argument("--keepPG", action="store_true", 
+                        help="Write both protected and unprotected "
                                             "synthons to the output (concerns Boc, Bn, Fmoc, Cbz and Esters protections).")
-    parser.add_argument("--Ro2Filtr", action="store_true", help="Write only synthons satisfying Ro2 (MW <= 200, logP <= 2, H-bond donors count <= 2 and H-bond acceptors count <= 4)")
+    parser.add_argument("--Ro2Filtr", action="store_true", 
+                        help="Write only synthons satisfying Ro2 (MW <= 200, logP <= 2, H-bond donors count <= 2 and H-bond acceptors count <= 4)")
 
-    parser.add_argument("--nCores", default=-1, type=int, help="Number of available cores for parallel calculations. Memory usage is optimized, so maximal number of parallel processes can be launched.")
+    parser.add_argument("--nCores", default=-1, type=int, 
+                        help="Number of available cores for parallel calculations. Memory usage is optimized, so maximal number of parallel processes can be launched.")
     args = parser.parse_args()
+
     with open(args.input) as f:
         colNumb = len(f.readline().strip().split())
     if colNumb == 1:
@@ -165,3 +168,7 @@ if __name__ == '__main__':
 
     os.remove(args.output + "_Synthmode.smi")
     os.rename("ttt", args.output + "_Synthmode.smi")
+
+
+if __name__ == '__main__':
+    cli_entry_point()
